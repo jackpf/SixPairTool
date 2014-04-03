@@ -18,5 +18,7 @@ If this still does not work, click "Send Log" to email me a log.</string>
     
     <string name="log_email">jack.philip.farrelly@gmail.com</string>
     <string name="log_subject">SixPairTool Log</string>
+    
+    <string name="admob_id">ca-app-pub-9822609068892864/5439361508</string>
 
 </resources>
