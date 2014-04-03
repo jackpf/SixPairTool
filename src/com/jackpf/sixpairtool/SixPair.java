@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
-import android.util.Log;
 
+/**
+ * Sixaxis controller methods
+ */
 public class SixPair
 {
     /**
@@ -33,6 +35,11 @@ public class SixPair
     private UsbPermissions permissions;
     
     /**
+     * Logger
+     */
+    public final Logger logger;
+    
+    /**
      * Constructor
      * 
      * @param context
@@ -41,6 +48,7 @@ public class SixPair
     {
         manager     = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         permissions = new UsbPermissions();
+        logger      = new Logger(context);
     }
     
     /**
@@ -51,16 +59,16 @@ public class SixPair
      */
     public UsbDevice findDevice(Intent intent)
     {
-        log("Attempting to find device from intent");
+        logger.log("Attempting to find device from intent");
         
         UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
         
         if (isController(device)) {
-            log("Controller found!");
+            logger.log("Controller found!");
             
             return device;
         } else {
-            log("No or invalid device found");
+            logger.log("No or invalid device found");
             
             return null;
         }
@@ -74,7 +82,7 @@ public class SixPair
      */
     public UsbDevice findDevice(Context context)
     {
-        log("Searching all devices");
+        logger.log("Searching all devices");
         
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         
@@ -82,11 +90,11 @@ public class SixPair
             UsbDevice device = entry.getValue();
             
             if (isController(device)) {
-                log("Device %s found, valid controller", device.getDeviceName());
+                logger.log("Device %s found, valid controller", device.getDeviceName());
                 
                 return device;
             } else {
-                log("Device %s found, not valid controller", device.getDeviceName());
+                logger.log("Device %s found, not valid controller", device.getDeviceName());
             }
         }
         
@@ -164,7 +172,7 @@ public class SixPair
      */
     public byte[] getMaster(UsbDevice device) throws IOException
     {
-        log("Reading master address...");
+        logger.log("Reading master address...");
         
         byte[] buffer = new byte[8];
 
@@ -179,14 +187,14 @@ public class SixPair
         );
         
         if (r < 1) {
-            log("Unable to communicate with device");
+            logger.log("Unable to communicate with device");
             
             return null;
         }
         
         byte[] bytes = Utils.getBytes(buffer, 2, buffer.length);
         
-        log("Master: %s", bytesToMac(bytes));
+        logger.log("Master: %s", bytesToMac(bytes));
         
         return bytes;
     }
@@ -205,7 +213,7 @@ public class SixPair
             throw new IOException("Invalid mac address");
         }
 
-        log("Setting master address to %s", bytesToMac(bytes));
+        logger.log("Setting master address to %s", bytesToMac(bytes));
         
         byte[] buffer = new byte[8];
         Utils.setBytes(buffer, 0, new byte[]{0x01, 0x00});
@@ -222,12 +230,12 @@ public class SixPair
         );
         
         if (r < 1) {
-            log("Unable to communicate with device");
+            logger.log("Unable to communicate with device");
             
             return false;
         }
         
-        log("Master set successfully");
+        logger.log("Master set successfully");
         
         return true;
     }
@@ -239,24 +247,13 @@ public class SixPair
      */
     public void printDeviceInfo(UsbDevice device)
     {
-        log(
-            "Device  %s:\nvendorId: %s\nproductId: %s\nclass: %s",
+        logger.log(
+            "Device  %s:\n\tvendorId: %s\n\tproductId: %s\n\tclass: %s",
             device.getDeviceName(),
             device.getVendorId(),
             device.getProductId(),
             device.getDeviceClass()
         );
-    }
-    
-    /**
-     * Log
-     * 
-     * @param s
-     * @param p
-     */
-    public void log(String s, Object ...p)
-    {
-        Log.d(SixPair.class.getName(), String.format(s, p));
     }
     
     /**

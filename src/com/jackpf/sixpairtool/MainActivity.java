@@ -1,6 +1,8 @@
 package com.jackpf.sixpairtool;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -20,9 +22,17 @@ public class MainActivity extends Activity
         PairReceiver.startPairService(this, null);
     }
     
-    public void sendLog()
+    public void sendLog(View v)
     {
-        PairReceiver.startPairService(this, null);
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        
+        String uri = "mailto:" + Uri.encode(getString(R.string.log_email)) + 
+                "?subject=" + Uri.encode(getString(R.string.log_subject)) + 
+                "&body=" + new Logger(this).getLog();
+        
+        intent.setData(Uri.parse(uri));
+
+        startActivity(Intent.createChooser(intent, "Send Log"));
     }
 
     @Override
