@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SixPairTool</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="text_main"><b>Instructions</b>\n\n\
+Simply plug your ps3 controller into your device via OTG cable and wait for a message to say your device has been paired.\n\n\
+Then unplug your controller, turn it on and away you go!\n\n\
+If this does not work, try pressing "Manual Pair" below.\n\n\
+If this still does not work, click "Send Log" to email me a log.</string>
+    <string name="text_pair_manual">Manual Pair</string>
+    <string name="text_log">Send Log</string>
+    
+    <string name="pair_success">Controller successfully paired!</string>
+    <string name="pair_fail">Pair error: %s</string>
+    <string name="device_not_found">Unable to find controller</string>
+
+</resources>

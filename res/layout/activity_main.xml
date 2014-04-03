@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+    
+    <TextView
+        android:id="@+id/text_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_main"
+        android:textIsSelectable="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/text_main"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal">
+        
+	    <Button
+	        android:id="@+id/btnPair"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/text_pair_manual"
+	        android:onClick="manualPair"
+        	android:layout_marginTop="10dp" />
+        
+	    <Button
+	        android:id="@+id/btnLog"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/text_log"
+	        android:onClick="sendLog"
+        	android:layout_marginTop="10dp" />
+    
+    </LinearLayout>
+
+</RelativeLayout>
