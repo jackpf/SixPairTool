@@ -267,6 +267,12 @@ public class SixPair
         return device != null && device.getVendorId() == VENDOR_ID && device.getProductId() == PRODUCT_ID;
     }
     
+    /**
+     * Opens a connection to a device
+     * 
+     * @param device
+     * @return
+     */
     protected UsbDeviceConnection openConnection(UsbDevice device)
     {
         UsbDeviceConnection connection = manager.openDevice(device); 
