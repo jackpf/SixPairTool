@@ -42,11 +42,11 @@ public class PairService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        sixPair.logger.log("SixPairTool: %s %s", android.os.Build.BRAND, android.os.Build.MODEL);
+        
         UsbDevice device = sixPair.findDevice(this);
         
         if (device != null) {
-            sixPair.printDeviceInfo(device);
-            
             processDevice(device);
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.device_not_found), Toast.LENGTH_SHORT).show();

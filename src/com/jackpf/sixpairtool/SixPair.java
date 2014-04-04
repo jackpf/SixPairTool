@@ -65,10 +65,12 @@ public class SixPair
         
         if (isController(device)) {
             logger.log("Controller found!");
+            logDeviceInfo(device);
             
             return device;
         } else {
             logger.log("No or invalid device found");
+            logDeviceInfo(device);
             
             return null;
         }
@@ -86,15 +88,19 @@ public class SixPair
         
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         
+        logger.log("Found %d devices", deviceList.size());
+        
         for (Map.Entry<String, UsbDevice> entry : deviceList.entrySet()) {
             UsbDevice device = entry.getValue();
             
             if (isController(device)) {
                 logger.log("Device %s found, valid controller", device.getDeviceName());
+                logDeviceInfo(device);
                 
                 return device;
             } else {
                 logger.log("Device %s found, not valid controller", device.getDeviceName());
+                logDeviceInfo(device);
             }
         }
         
@@ -245,15 +251,19 @@ public class SixPair
      * 
      * @param device
      */
-    public void printDeviceInfo(UsbDevice device)
+    public void logDeviceInfo(UsbDevice device)
     {
-        logger.log(
-            "Device  %s:\n\tvendorId: %s\n\tproductId: %s\n\tclass: %s",
-            device.getDeviceName(),
-            device.getVendorId(),
-            device.getProductId(),
-            device.getDeviceClass()
-        );
+        if (device != null) {
+            logger.log(
+                "Device  %s:\n\tvendorId: %s\n\tproductId: %s\n\tclass: %s",
+                device.getDeviceName(),
+                device.getVendorId(),
+                device.getProductId(),
+                device.getDeviceClass()
+            );
+        } else {
+            logger.log("Null device");
+        }
     }
     
     /**
