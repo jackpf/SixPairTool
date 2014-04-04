@@ -64,14 +64,8 @@ public class SixPair
         UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
         
         if (isController(device)) {
-            logger.log("Controller found!");
-            logDeviceInfo(device);
-            
             return device;
         } else {
-            logger.log("No or invalid device found");
-            logDeviceInfo(device);
-            
             return null;
         }
     }
@@ -94,13 +88,7 @@ public class SixPair
             UsbDevice device = entry.getValue();
             
             if (isController(device)) {
-                logger.log("Device %s found, valid controller", device.getDeviceName());
-                logDeviceInfo(device);
-                
                 return device;
-            } else {
-                logger.log("Device %s found, not valid controller", device.getDeviceName());
-                logDeviceInfo(device);
             }
         }
         
@@ -247,26 +235,6 @@ public class SixPair
     }
     
     /**
-     * Print device info
-     * 
-     * @param device
-     */
-    public void logDeviceInfo(UsbDevice device)
-    {
-        if (device != null) {
-            logger.log(
-                "Device  %s:\n\tvendorId: %s\n\tproductId: %s\n\tclass: %s",
-                device.getDeviceName(),
-                device.getVendorId(),
-                device.getProductId(),
-                device.getDeviceClass()
-            );
-        } else {
-            logger.log("Null device");
-        }
-    }
-    
-    /**
      * Check device is a ps3 controller
      * 
      * @param device
@@ -274,7 +242,27 @@ public class SixPair
      */
     protected boolean isController(UsbDevice device)
     {
-        return device != null && device.getVendorId() == VENDOR_ID && device.getProductId() == PRODUCT_ID;
+        //return device != null && device.getVendorId() == VENDOR_ID && device.getProductId() == PRODUCT_ID;
+        
+        if (device == null) {
+            logger.log("No device found");
+            
+            return false;
+        } else {
+            logger.log(
+                "Device  %s:\n\tvendorId: %s\n\tproductId: %s\n\tclass: %s",
+                device.getDeviceName(),
+                device.getVendorId(),
+                device.getProductId(),
+                device.getDeviceClass()
+            );
+            
+            if (device.getVendorId() != VENDOR_ID || device.getProductId() != PRODUCT_ID) {
+                logger.log("Warning: Device vendorId and productId do not match");
+            }
+            
+            return true;
+        }
     }
     
     /**

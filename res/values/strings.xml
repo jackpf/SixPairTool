@@ -8,7 +8,7 @@
 Simply plug your ps3 controller into your device via OTG cable and wait for a message to say your device has been paired.\n\n\
 Then unplug your controller, turn it on and away you go!\n\n\
 If this does not work, try pressing "Manual Pair" below.\n\n\
-If this still does not work, click "Send Log" to email me a log.</string>
+If this still does not work, click "Send Log" to email me a log. If manual pair works, but auto pairing does not, please also send me a log so I can enable auto pairing.</string>
     <string name="text_pair_manual">Manual Pair</string>
     <string name="text_log">Send Log</string>
     
