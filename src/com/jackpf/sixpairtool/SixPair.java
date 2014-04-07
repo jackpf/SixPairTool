@@ -112,12 +112,11 @@ public class SixPair
      * 
      * @param bytes
      * @return
-     * @throws IOException
      */
-    public String bytesToMac(byte[] bytes) throws IOException
+    public String bytesToMac(byte[] bytes)
     {
-        if (bytes.length != 6) {
-            throw new IOException(String.format("Invalid byte length: %d", bytes.length));
+        if (bytes == null || bytes.length != 6) {
+            return null;
         }
         
         StringBuilder sb = new StringBuilder();
@@ -138,14 +137,13 @@ public class SixPair
      * 
      * @param mac
      * @return
-     * @throws IOException
      */
-    public byte[] macToBytes(String mac) throws IOException
+    public byte[] macToBytes(String mac)
     {
         StringTokenizer tok = new StringTokenizer(mac, ":");
         
-        if (tok.countTokens() != 6) {
-            throw new IOException(String.format("Invalid mac length: %d", tok.countTokens()));
+        if (mac == null || tok.countTokens() != 6) {
+            return null;
         }
         
         byte[] bytes = new byte[6];
