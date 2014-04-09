@@ -256,7 +256,9 @@ public class SixPair
             );
             
             if (device.getVendorId() != VENDOR_ID || device.getProductId() != PRODUCT_ID) {
-                logger.log("Warning: Device vendorId and productId do not match");
+                logger.log("Vendor ID and product ID do not match, invalid controller");
+                
+                return false;
             }
             
             return true;
